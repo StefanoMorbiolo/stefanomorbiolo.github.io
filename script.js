@@ -137,3 +137,186 @@ function consoleNavLinks(links) {
 }
 
 document.getElementById('chi-sono')
+
+
+// js/script.js
+
+// Questo script è stato consolidato dalle Lezioni 18, 19 e 20.
+// Assicurati che il tuo HTML sia configurato correttamente per il form di Netlify:
+// <form name="contact" method="POST" data-netlify="true">
+//   ... (campi input con attributi 'name') ...
+// </form>
+
+
+// --- Lezione 17: DOM e Selezione Elementi (Rivedere per contesto) ---
+console.log("\n--- Lezione 17: DOM e Selezione Elementi (Rivedere) ---");
+
+// Dichiarazione UNICA delle variabili all'inizio o al primo utilizzo.
+
+// 1. Selezionare un elemento tramite ID (document.getElementById)
+chiSonoSection = document.getElementById('chi-sono'); // PRIMA DICHIARAZIONE
+if (chiSonoSection) {
+    console.log("Sezione 'Chi sono' trovata tramite ID:", chiSonoSection);
+    const titoloChiSono = chiSonoSection.querySelector('h2');
+    if (titoloChiSono) {
+        console.log("Il titolo di questa sezione è:", titoloChiSono.textContent);
+    }
+} else {
+    console.log("Errore: Sezione 'Chi sono' non trovata. Controlla l'ID.");
+}
+
+// 2. Selezionare elementi tramite classe (document.getElementsByClassName)
+const navLinks = document.getElementsByClassName('nav-link'); // PRIMA DICHIARAZIONE
+if (navLinks.length > 0) {
+    console.log("Link di navigazione trovati tramite classe:", navLinks);
+    for (const link of navLinks) {
+        console.log("Testo link:", link.textContent);
+    }
+}
+
+// 3. Selezionare elementi tramite tag (document.getElementsByTagName)
+const allParagraphs = document.getElementsByTagName('p'); // PRIMA DICHIARAZIONE
+if (allParagraphs.length > 0) {
+    console.log("Paragrafi trovati tramite tag:", allParagraphs);
+}
+
+// 4. Selezionare elementi con querySelector e querySelectorAll (Moderno e Flessibile)
+const firstProject = document.querySelector('#progetti li'); // PRIMA DICHIARAZIONE
+if (firstProject) {
+    console.log("Primo progetto trovato con querySelector:", firstProject.textContent);
+}
+
+const allProjectItems = document.querySelectorAll('#progetti li'); // PRIMA DICHIARAZIONE
+if (allProjectItems.length > 0) {
+    console.log("Tutti i progetti trovati con querySelectorAll:", allProjectItems);
+    allProjectItems.forEach((item, index) => {
+        console.log(`Progetto ${index + 1}:`, item.textContent);
+    });
+}
+
+
+// --- Lezione 18: Manipolazione del DOM ---
+console.log("\n--- Lezione 18: Manipolazione del DOM ---");
+
+// 1. Modificare il testo del sottotitolo nell'header
+const subtitle = document.querySelector('header p'); // PRIMA DICHIARAZIONE
+if (subtitle) {
+    subtitle.textContent = "Benvenuto nel mio spazio creativo!";
+    console.log("Sottotitolo header modificato.");
+}
+
+// 2. Modificare l'attributo src dell'immagine del profilo e aggiungere un data attribute
+// Usiamo 'profileImage' per tutte le operazioni sull'immagine del profilo
+const profileImage = document.querySelector('#chi-sono img'); // PRIMA DICHIARAZIONE (usata anche dopo)
+if (profileImage) {
+    // Se hai un'immagine 'profile-pic-new.webp' nella cartella images, puoi uncommentare questa riga
+    // profileImage.setAttribute('src', 'images/profile-pic-new.webp');
+    profileImage.setAttribute('data-original-src', profileImage.src); // Salva il src originale come data attribute
+    profileImage.alt = "Foto profilo aggiornata di Stefano"; // Modifica direttamente la proprietà alt
+    console.log("Immagine profilo modificata e data attribute aggiunto.");
+}
+
+
+// 4. Creare e aggiungere un nuovo link nel footer
+const footer = document.querySelector('footer'); // PRIMA DICHIARAZIONE
+if (footer) {
+    const newFooterLink = document.createElement('a');
+    newFooterLink.href = "https://github.com/StefanoMorbiolo"; // Sostituisci con il tuo profilo GitHub
+    newFooterLink.textContent = "GitHub";
+    newFooterLink.target = "_blank"; // Apre in una nuova scheda
+    newFooterLink.style.marginLeft = '15px'; // Stile CSS diretto (per esempio)
+    newFooterLink.style.color = '#fff'; // Colore bianco
+    newFooterLink.style.textDecoration = 'none'; // Nessuna sottolineatura
+    newFooterLink.style.fontWeight = 'bold';
+
+    let linkContainer = footer.querySelector('.footer-links'); // Uso 'let' perché potrebbe essere riassegnato
+    if (!linkContainer) {
+        linkContainer = document.createElement('div');
+        linkContainer.classList.add('footer-links');
+        footer.appendChild(linkContainer);
+    }
+    linkContainer.appendChild(newFooterLink);
+    console.log("Link GitHub aggiunto al footer.");
+}
+
+
+// --- Lezione 19: Eventi e addEventListener / Lezione 20: Interattività per il Portfolio ---
+console.log("\n--- Lezione 19/20: Eventi e Interattività ---");
+
+
+// Listener per il caricamento completo del DOM (assicura che l'HTML sia pronto)
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Il DOM è stato completamente caricato e analizzato (DOMContentLoaded)!");
+
+    // Aggiungi la classe 'page-loaded' al body per effetti CSS (da Lezione 18)
+    document.body.classList.add('page-loaded');
+    console.log("Classe 'page-loaded' aggiunta al body.");
+
+    // Task 1: Effetto Fade-In per le Sezioni (da Lezione 20)
+    const allSections = document.querySelectorAll('main section'); // PRIMA DICHIARAZIONE
+    allSections.forEach(section => {
+        section.classList.remove('section-hidden');
+        section.classList.add('section-visible');
+    });
+    console.log("Animazione fade-in delle sezioni attivata.");
+});
+
+
+// Interagire con l'immagine del profilo al mouseover/mouseout (da Lezione 19)
+// Utilizziamo la variabile 'profileImage' già dichiarata in Lezione 18
+if (profileImage) { // Usiamo la variabile 'profileImage' già definita sopra
+    profileImage.addEventListener('mouseover', function() {
+        console.log("Mouse sopra l'immagine del profilo!");
+        this.style.filter = 'grayscale(100%)';
+        this.style.transform = 'scale(1.1)';
+        this.style.transition = 'filter 0.3s ease, transform 0.3s ease';
+    });
+
+    profileImage.addEventListener('mouseout', function() {
+        console.log("Mouse fuori dall'immagine del profilo!");
+        this.style.filter = 'none';
+        this.style.transform = 'scale(1.0)';
+    });
+}
+
+
+// Validazione e Invio Form (Aggiornato per Netlify Forms - da Lezione 20 e successiva richiesta)
+const contactForm = document.querySelector('form[name="contact"]'); // PRIMA DICHIARAZIONE
+const nomeInput = document.getElementById('nome'); // PRIMA DICHIARAZIONE
+const emailInput = document.getElementById('email'); // PRIMA DICHIARAZIONE
+const messaggioTextarea = document.getElementById('messaggio'); // PRIMA DICHIARAZIONE
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let isValid = true;
+
+        if (nomeInput.value.trim() === '') {
+            alert("Per favore, inserisci il tuo nome.");
+            isValid = false;
+            nomeInput.focus();
+        } else if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) {
+            alert("Per favore, inserisci un'email valida.");
+            isValid = false;
+            emailInput.focus();
+        } else if (messaggioTextarea.value.trim().length < 10) {
+            alert("Il messaggio deve contenere almeno 10 caratteri.");
+            isValid = false;
+            messaggioTextarea.focus();
+        }
+
+        if (isValid) {
+            console.log("Form validato con successo da JavaScript. Netlify prenderà il controllo dell'invio.");
+            alert("Grazie per il tuo messaggio! Il tuo form è in fase di invio.");
+
+            contactForm.submit();
+
+            nomeInput.value = '';
+            emailInput.value = '';
+            messaggioTextarea.value = '';
+        }
+    });
+} else {
+    console.log("Errore: Form di contatto non trovato (verifica il selettore nel JS).");
+}
