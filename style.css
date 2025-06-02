@@ -1,0 +1,325 @@
+/* Reset del Box Model */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+/* --- Stili Base (Mobile-First) --- */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    background-color: #ecf0f1;
+    color: #34495e;
+    line-height: 1.6;
+
+    /* Grid per il layout principale del body */
+    display: grid;
+    /* Per mobile, una singola colonna con margini laterali per il contenuto */
+    grid-template-columns: 1fr; /* Una singola colonna per il contenuto */
+    grid-template-rows: auto 1fr auto; /* Header (auto), Main (1fr), Footer (auto) */
+    min-height: 100vh;
+}
+
+/* Header: Stile generale e come contenitore flex per .header-inner */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1em 0; /* Padding verticale, laterale gestito da .header-inner */
+    margin-bottom: 0px;
+
+    /* L'header si estende su tutta la larghezza della viewport */
+    grid-column: 1 / -1; /* Estende l'header su tutte le colonne del body (anche su mobile) */
+    display: flex; /* Header è un contenitore flex per il suo contenuto */
+    justify-content: center; /* Centra il suo contenuto (.header-inner) */
+    align-items: center;
+}
+
+/* header-inner: Contenitore per h1 e nav, gestisce allineamento e larghezza */
+.header-inner {
+    display: flex; /* Contenitore flex per h1 e nav */
+    flex-direction: row; /* MOBILE: mette in riga h1 e nav */
+    align-items: center; /* MOBILE: Centra orizzontalmente h1 e nav */
+    width: 100%; /* Occupa tutta la larghezza dell'header genitore */
+    max-width: 960px; /* Larghezza massima del contenuto (come il main) */
+    padding: 0 20px; /* Padding laterale per il contenuto (evita che tocchi i bordi) */
+    box-sizing: border-box; /* Include padding nella larghezza */
+}
+
+/* h1 nel header */
+header h1 {
+    font-size: 1rem; /* Mobile font size */
+    color: #ecf0f1;
+    margin: 0 0 0 0; /* Margini a zero */
+    text-align: left; /* allinea a destra il testo dell'h1 su mobile */
+    white-space: nowrap;
+}
+
+/* Navigazione */
+nav {
+    width: 100%; /* Occupiamo tutta la larghezza per la nav su mobile */
+    margin: 0; /* Reset margini */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row; /* MOBILE: impila i link */
+    justify-content:flex-end;
+    gap: 0px; /* Spazio ridotto tra i link */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 1rem;
+    padding: 3px 5px;
+    border-radius: 4px;
+    white-space: nowrap; /* Evita che il testo vada a capo nel link */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover {
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px); /* Sposta leggermente in alto al passaggio del mouse */
+}
+
+/* Main Content Area */
+main {
+    /* Per mobile, il main occupa l'unica colonna della griglia del body */
+    grid-column: 1 / -1; /* Si estende su tutta la larghezza della colonna unica */
+    max-width: 100%; /* Larghezza massima del contenuto, per schermi piccoli */
+    padding: 0 0px; /* Padding laterale per il main su mobile */
+    margin: 0px auto; /* Centra il main e dà margine verticale */
+    box-sizing: border-box;
+    /* Usiamo Flexbox per impilare le sezioni al suo interno */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spazio tra le sezioni */
+}
+
+/* Definisci i keyframes per l'animazione "fadeInUp" */
+@keyframes fadeInUp {
+    from {
+        opacity: 0; /* Inizia invisibile */
+        transform: translateY(20px); /* Inizia leggermente più in basso */
+    }
+    to {
+        opacity: 1; /* Diventa completamente visibile */
+        transform: translateY(0); /* Ritorna alla posizione originale */
+    }
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* margin-bottom: 20px; Ora gestito dal gap sul main */
+    /* ... (le proprietà esistenti della sezione) ... */
+    opacity: 0; /* Inizialmente invisibile prima dell'animazione */
+    animation: fadeInUp 0.6s ease-out forwards; /* Applica l'animazione */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+section:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata al passaggio del mouse */
+    transform: translateY(-5px); /* Sposta leggermente in alto */
+}
+
+#chi-sono {
+    animation-delay: 0.2s;
+}
+#progetti {
+    animation-delay: 0.4s;
+}
+#contatti {
+    animation-delay: 0.6s;
+}
+
+#chi-sono img {
+    border-radius: 5%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 15px auto;
+    float: none; /* Rimuovi float su mobile per centrare */
+}
+
+/* Contatti Form */
+#contatti form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#contatti label {
+    font-weight: bold;
+    color: #34495e; /* Colore più scuro per maggiore leggibilità */
+    margin-bottom: 5px; /* Spazio sotto la label e prima dell'input */
+}
+
+#contatti input[type="text"],
+#contatti input[type="email"],
+#contatti textarea {
+    border: 1px solid #bdc3c7;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transizione per focus state */
+}
+
+/* Stile per il focus (quando l'utente clicca/tabula sul campo) */
+#contatti input[type="text"]:focus,
+#contatti input[type="email"]:focus,
+#contatti textarea:focus {
+    border-color: #27ae60; /* Bordo verde più scuro al focus */
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.3); /* Leggera ombra verde */
+    outline: none; /* Rimuove l'outline predefinito del browser, lo rimpiazziamo con box-shadow */
+}
+
+/* Stile per i placeholder */
+#contatti input::placeholder,
+#contatti textarea::placeholder {
+    color: #95a5a6; /* Colore grigio leggero per il placeholder */
+    opacity: 1; /* Assicura che sia sempre visibile (Firefox lo rende trasparente di default) */
+}
+
+#contatti input[type="submit"] {
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: center; /* Centra il pulsante su mobile */
+}
+
+/* Stile per il pulsante di invio */
+#contatti input[type="submit"] {
+    background-color: #27ae60; /* Verde principale */
+    color: white;
+    padding: 12px 25px; /* Padding generoso per un bottone ben cliccabile */
+    border: none; /* Rimuovi il bordo predefinito */
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transizione al hover */
+    align-self: flex-start; /* Allinea a sinistra (desktop) */
+}
+
+#contatti input[type="submit"]:hover {
+    background-color: #2ecc71; /* Verde più chiaro al passaggio del mouse */
+    transform: translateY(-2px); /* Piccolo effetto di sollevamento */
+}
+
+.fa-solid, .fa-brands { /* Seleziona tutte le icone di Font Awesome */
+    margin-right: 5px; /* Aggiunge un po' di spazio a destra dell'icona */
+    color: #ffffff; /* Cambia il colore dell'icona (es. verde) */
+    font-size: 1.2em; /* Ingrandisce leggermente l'icona rispetto al testo circostante */
+}
+
+/* Footer */
+footer {
+    background-color: #34495e;
+    color: #ecf0f1;
+    text-align: center;
+    margin-top: 30px;
+    padding: 1em 0;
+    font-size: 0.8em;
+    border-top: 1px solid #eee;
+    grid-column: 1 / -1; /* Footer si estende su tutta la larghezza */
+}
+
+/* --- Media Query per Desktop (min-width: 769px) --- */
+@media (min-width: 769px) {
+    body {
+        /* Torna alla griglia a 3 colonne per desktop */
+        grid-template-columns: 1fr minmax(300px, 960px) 1fr;
+    }
+
+    .header-inner {
+        flex-direction: row; /* DESKTOP: Affianca h1 e nav */
+        justify-content: space-between; /* DESKTOP: H1 a sx, Nav a dx */
+        align-items: center; /* DESKTOP: Allinea verticalmente */
+        padding: 0 20px; /* Padding laterale interno (già impostato) */
+    }
+
+    header h1 {
+        font-size: 3.2rem; /* Desktop font size */
+        margin: 0; /* Rimuovi margini su desktop */
+        text-align: left; /* Allinea a sinistra il testo dell'h1 */
+    }
+
+    nav {
+        width: auto; /* La nav occupa solo lo spazio necessario su desktop */
+    }
+
+    nav ul {
+        flex-direction: row; /* DESKTOP: Affianca i link */
+        gap: 20px; /* Spazio normale tra i link */
+    }
+
+    nav a {
+        font-size: 1.1rem; /* Desktop font size */
+        padding: 5px 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Ripeti la transizione */
+    }
+
+    nav a:hover {
+        transform: translateY(-10px);
+    }
+
+    main {
+        /* Il main si posiziona nella colonna centrale */
+        grid-column: 2 / 3; /* Colonna 2 del body grid */
+        margin: 30px 0; /* Margine verticale */
+        padding: 0; /* Nessun padding sul main, la colonna di grid lo gestisce */
+    }
+
+    section {
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* gap sul main gestisce margin-bottom */
+        transition: box-shadow 0.3s ease, transform 0.3s ease; /* Ripeti la transizione */
+    }
+
+    section:hover {
+        transform: translateY(-5px);
+    }
+
+    #chi-sono img {
+        max-width: 150px;
+        float: right; /* Rimetti il float a destra su desktop */
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    #contatti input[type="text"],
+    #contatti input[type="email"],
+    #contatti textarea {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    #contatti input[type="submit"] {
+        padding: 12px 25px;
+        font-size: 1rem;
+        align-self: flex-start; /* Allinea il pulsante a sinistra su desktop */
+    }
+
+    footer {
+        margin-top: 40px;
+        padding: 1.5em 0;
+        font-size: 0.9em;
+    }
+}
